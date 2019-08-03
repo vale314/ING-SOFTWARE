@@ -12,6 +12,7 @@ import ContactState from './context/contact/ContactState';
 import AuthState from './context/auth/AuthState';
 import AlertState from './context/alert/AlertState';
 import setAuthToken from './utils/setAuthToken';
+import MessageState from './context/message/MessageState'
 import './App.css';
 
 if (localStorage.token) {
@@ -22,22 +23,24 @@ const App = () => {
   return (
     <AuthState>
       <ContactState>
-        <AlertState>
-          <Router>
-            <Fragment>
-              <Navbar />
-              <div className='container'>
-                <Alerts />
-                <Switch>
-                  <PrivateRoute exact path='/' component={Home} />
-                  <Route exact path='/about' component={About} />
-                  <Route exact path='/register' component={Register} />
-                  <Route exact path='/login' component={Login} />
-                </Switch>
-              </div>
-            </Fragment>
-          </Router>
-        </AlertState>
+        <MessageState>
+          <AlertState>
+            <Router>
+              <Fragment>
+                <Navbar />
+                <div className='container'>
+                  <Alerts />
+                  <Switch>
+                    <PrivateRoute exact path='/' component={Home} />
+                    <Route exact path='/about' component={About} />
+                    <Route exact path='/register' component={Register} />
+                    <Route exact path='/login' component={Login} />
+                  </Switch>
+                </div>
+              </Fragment>
+            </Router>
+          </AlertState>
+        </MessageState>  
       </ContactState>
     </AuthState>
   );

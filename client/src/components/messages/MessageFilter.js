@@ -1,0 +1,36 @@
+import React, { useContext, useRef, useEffect } from 'react';
+import MessageContext from '../../context/message/messageContext';
+
+const MessageFilter = () => {
+  const messageContext = useContext(MessageContext);
+  const text = useRef('');
+
+  const { filterMessages, clearFilterMessage, filteredMessages } = messageContext;
+
+  useEffect(() => {
+    if (filteredMessages === null) {
+      text.current.value = '';
+    }
+  });
+
+  const onChange = e => {
+    if (text.current.value !== '') {
+      filterMessages(e.target.value);
+    } else {
+      clearFilterMessage();
+    }
+  };
+
+  return (
+    <form>
+      <input
+        ref={text}
+        type='text'
+        placeholder='Filter Messages'
+        onChange={onChange}
+      />
+    </form>
+  );
+};
+
+export default MessageFilter;
