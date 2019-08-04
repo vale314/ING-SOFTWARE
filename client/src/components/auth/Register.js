@@ -24,11 +24,13 @@ const Register = props => {
   const [user, setUser] = useState({
     name: '',
     email: '',
+    phone:'',
+    type:'personal',
     password: '',
     password2: ''
   });
 
-  const { name, email, password, password2 } = user;
+  const { name, email, phone, type, password, password2 } = user;
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
@@ -42,6 +44,8 @@ const Register = props => {
       register({
         name,
         email,
+        phone,
+        type,
         password
       });
     }
@@ -73,6 +77,31 @@ const Register = props => {
             required
           />
         </div>
+        <input
+          type='text'
+          placeholder='Phone'
+          name='phone'
+          value={phone}
+          onChange={onChange}
+          required
+        />
+        <h5>Contact Type</h5>
+        <input
+          type='radio'
+          name='type'
+          value='personal'
+          checked={type === 'personal'}
+          onChange={onChange}
+        />{' '}
+        Personal{' '}
+        <input
+          type='radio'
+          name='type'
+          value='professional'
+          checked={type === 'professional'}
+          onChange={onChange}
+        />{' '}
+        Professional
         <div className='form-group'>
           <label htmlFor='password'>Password</label>
           <input

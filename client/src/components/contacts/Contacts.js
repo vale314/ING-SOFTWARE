@@ -4,13 +4,13 @@ import ContactItem from './ContactItem';
 import Spinner from '../layout/Spinner';
 import ContactContext from '../../context/contact/contactContext';
 
-const Contacts = () => {
+const Contacts = ({api}) => {
   const contactContext = useContext(ContactContext);
 
   const { contacts, filtered, getContacts, loading } = contactContext;
 
   useEffect(() => {
-    getContacts();
+    getContacts(api);
     // eslint-disable-next-line
   }, []);
 
@@ -29,7 +29,7 @@ const Contacts = () => {
                   timeout={500}
                   classNames='item'
                 >
-                  <ContactItem contact={contact} />
+                  <ContactItem contact={contact} api={api} />
                 </CSSTransition>
               ))
             : contacts.map(contact => (
@@ -38,7 +38,7 @@ const Contacts = () => {
                   timeout={500}
                   classNames='item'
                 >
-                  <ContactItem contact={contact} />
+                  <ContactItem contact={contact} api={api} />
                 </CSSTransition>
               ))}
         </TransitionGroup>

@@ -1,18 +1,68 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import ContactContext from '../../context/contact/contactContext';
+import AlertContext from '../../context/alert/alertContext';
 
-const ContactItem = ({ contact }) => {
+const ContactItem = ({ contact, api }) => {
   const contactContext = useContext(ContactContext);
-  const { deleteContact, setCurrent, clearCurrent } = contactContext;
+  const alertContext = useContext(AlertContext);
+
+  const {deleteContact, setCurrent, clearCurrent } = contactContext;
+  const {setAlert} = alertContext;
 
   const { _id, name, email, phone, type } = contact;
+  
 
   const onDelete = () => {
     deleteContact(_id);
     clearCurrent();
   };
 
+  const sendContact = async () =>{
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      await axios.post('/api/contacts', contact, config);
+      setAlert('Agregado Exitosamente','success',1000);
+    }catch(err){
+      setAlert('User Is In Your Contacts','danger',4000);
+      console.log(err)
+    }
+  }
+
+  const activedContacts = (
+    <Fragment>
+      <button
+        className='btn btn-dark btn-sm'
+        onClick={() => setCurrent(contact)}
+        >
+        Enviar Msj
+      </button>
+      <button
+        className='btn btn-dark btn-sm'
+        onClick={() => setCurrent(contact)}
+        >
+        Edit
+      </button>
+      <button className='btn btn-danger btn-sm' onClick={onDelete}>
+        Delete
+      </button>
+    </Fragment>  
+  )
+
+  const activedUsers = (
+    <Fragment>
+      <button className='btn btn-danger btn-sm' onClick={sendContact}>
+          Add Contact
+      </button>
+    </Fragment>  
+  )
+  
   return (
     <div className='card bg-light'>
       <h3 className='text-primary text-left'>
@@ -40,15 +90,11 @@ const ContactItem = ({ contact }) => {
         )}
       </ul>
       <p>
-        <button
-          className='btn btn-dark btn-sm'
-          onClick={() => setCurrent(contact)}
-        >
-          Edit
-        </button>
-        <button className='btn btn-danger btn-sm' onClick={onDelete}>
-          Delete
-        </button>
+        {api==='contacts' ? 
+          activedContacts
+          :
+          activedUsers
+        }
       </p>
     </div>
   );

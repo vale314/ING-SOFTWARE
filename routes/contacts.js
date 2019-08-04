@@ -3,8 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator/check');
 
-const User = require('../models/User');
-const Contact = require('../models/Contact');
+const Contact = require('../models/contact');
 
 // @route     GET api/contacts
 // @desc      Get all users contacts
@@ -39,7 +38,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
+    
     const { name, email, phone, type } = req.body;
 
     try {
@@ -55,8 +54,13 @@ router.post(
 
       res.json(contact);
     } catch (err) {
-      console.error(er.message);
-      res.status(500).send('Server Error');
+      if(err.code == 11000){
+        console.error(err.message);
+        res.status(400).json({message:'Contact Is Duplicated'});
+      }else{
+        console.error(err.message);
+        res.status(500).send('Server Error');
+      }
     }
   }
 );

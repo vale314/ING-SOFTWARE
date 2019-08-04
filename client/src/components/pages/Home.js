@@ -23,7 +23,7 @@ const Home = () => {
         </div>
         <div>
           <ContactFilter />
-          <Contacts />
+          <Contacts api="contacts" />
         </div>
       </div>
       <div className='grid-2'>
