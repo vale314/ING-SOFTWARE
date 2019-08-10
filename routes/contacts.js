@@ -51,7 +51,15 @@ router.post(
       });
 
       const contact = await newContact.save();
+      /*
+        Buscar Los Contactos Asociados
+        Buscar Dentro el correo del nuevo contacto
+        Si Se Encuentra
+          regresar que esta existente
+        Si No
+          Guardar
 
+      */
       res.json(contact);
     } catch (err) {
       if(err.code == 11000){

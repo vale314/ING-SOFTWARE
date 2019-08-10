@@ -4,7 +4,7 @@ import MessageContext from '../../context/message/messageContext';
 
 const MessageItem = ({ message }) => {
   const messageContext = useContext(MessageContext);
-  const { deleteMessage, setCurrentMessage, clearCurrentMessage } = messageContext;
+  const { deleteMessage, clearCurrentMessage } = messageContext;
 
   const { _id, name, email, phone, type } = message;
 
@@ -42,9 +42,8 @@ const MessageItem = ({ message }) => {
       <p>
         <button
           className='btn btn-dark btn-sm'
-          onClick={() => setCurrentMessage(message)}
         >
-          Edit
+          Ver
         </button>
         <button className='btn btn-danger btn-sm' onClick={onDelete}>
           Delete

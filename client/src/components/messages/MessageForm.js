@@ -14,6 +14,7 @@ const MessageForm = () => {
         name: '',
         email: '',
         phone: '',
+        msj:'',
         type: 'personal'
       });
     }
@@ -23,18 +24,23 @@ const MessageForm = () => {
     name: '',
     email: '',
     phone: '',
+    msj:'',
+    _id:'',
     type: 'personal'
   });
 
-  const { name, email, phone, type } = message;
+  const { name, email, phone, msj, type} = message;
 
   const onChange = e =>
     setMessage({ ...message, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
-    if (currentMessage === null) {
-      addMessage(message);
+    if (currentMessage != null) {
+      addMessage({
+        msj:msj,
+        _email:email
+      });
     }
     clearAll();
   };
@@ -86,6 +92,8 @@ const MessageForm = () => {
         onChange={onChange}
       />{' '}
       Professional
+      <textarea name="msj" value={msj} onChange={onChange}>
+      </textarea>
       <div>
         <input
           type='submit'

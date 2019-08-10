@@ -3,13 +3,16 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import ContactContext from '../../context/contact/contactContext';
 import AlertContext from '../../context/alert/alertContext';
+import MessageContext from '../../context/message/messageContext';
 
 const ContactItem = ({ contact, api }) => {
   const contactContext = useContext(ContactContext);
   const alertContext = useContext(AlertContext);
+  const messageContext = useContext(MessageContext);
 
   const {deleteContact, setCurrent, clearCurrent } = contactContext;
   const {setAlert} = alertContext;
+  const {setCurrentMessage} = messageContext;
 
   const { _id, name, email, phone, type } = contact;
   
@@ -39,7 +42,7 @@ const ContactItem = ({ contact, api }) => {
     <Fragment>
       <button
         className='btn btn-dark btn-sm'
-        onClick={() => setCurrent(contact)}
+        onClick={() => setCurrentMessage(contact)}
         >
         Enviar Msj
       </button>

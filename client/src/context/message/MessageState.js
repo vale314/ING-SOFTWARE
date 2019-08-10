@@ -27,7 +27,7 @@ const MessageState = props => {
   // Get Messages
   const getMessages = async () => {
     try {
-      const res = await axios.get('/api/contacts');
+      const res = await axios.get('/api/message');
 
       dispatch({
         type: GET_MESSAGES,
@@ -50,13 +50,9 @@ const MessageState = props => {
     };
 
     try {
-      const res = await axios.post('/api/contacts', message, config);
+      await axios.post('/api/message', message, config);
 
-      dispatch({
-        type: ADD_MESSAGE,
-        payload: res.data
-      });
-    } catch (err) {
+    }catch (err) {
       dispatch({
         type: MESSAGE_ERROR,
         payload: err.response.msg
