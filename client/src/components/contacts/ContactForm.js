@@ -63,6 +63,7 @@ const ContactForm = () => {
         name='email'
         value={email}
         onChange={onChange}
+        disabled
       />
       <input
         type='text'

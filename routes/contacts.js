@@ -30,6 +30,12 @@ router.post(
     [
       check('name', 'Name is required')
         .not()
+        .isEmpty(),
+      check('email', 'Email is required')
+        .not()
+        .isEmpty(),
+      check('type', 'Type is required')
+        .not()
         .isEmpty()
     ]
   ],
@@ -41,6 +47,12 @@ router.post(
     
     const { name, email, phone, type } = req.body;
 
+    const contacts = await Contact.find({ user: req.user.id, email:email })
+
+    if(Object.keys(contacts).length > 0){
+      return res.status(400).json({message:'Contact Is Duplicated'});
+    }
+
     try {
       const newContact = new Contact({
         name,
@@ -51,24 +63,11 @@ router.post(
       });
 
       const contact = await newContact.save();
-      /*
-        Buscar Los Contactos Asociados
-        Buscar Dentro el correo del nuevo contacto
-        Si Se Encuentra
-          regresar que esta existente
-        Si No
-          Guardar
-
-      */
+    
       res.json(contact);
     } catch (err) {
-      if(err.code == 11000){
-        console.error(err.message);
-        res.status(400).json({message:'Contact Is Duplicated'});
-      }else{
-        console.error(err.message);
-        res.status(500).send('Server Error');
-      }
+      console.error(err.message);
+      res.status(500).send('Server Error');
     }
   }
 );

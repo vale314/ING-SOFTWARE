@@ -6,7 +6,7 @@ const MessageItem = ({ message }) => {
   const messageContext = useContext(MessageContext);
   const { deleteMessage, clearCurrentMessage } = messageContext;
 
-  const { _id, name, email, phone, type } = message;
+  const { _id, name, email, phone, level, msj } = message;
 
   const onDelete = () => {
     deleteMessage(_id);
@@ -21,10 +21,10 @@ const MessageItem = ({ message }) => {
           style={{ float: 'right' }}
           className={
             'badge ' +
-            (type === 'professional' ? 'badge-success' : 'badge-primary')
+            (level === 'Important' ? 'badge-success' : 'badge-primary')
           }
         >
-          {type.charAt(0).toUpperCase() + type.slice(1)}
+          {level.charAt(0).toUpperCase() + level.slice(1)}
         </span>
       </h3>
       <ul className='list'>
@@ -39,6 +39,9 @@ const MessageItem = ({ message }) => {
           </li>
         )}
       </ul>
+      <p className='my-1'>
+        {msj}
+      </p>
       <p>
         <button
           className='btn btn-dark btn-sm'

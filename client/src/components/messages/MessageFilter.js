@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect, Fragment } from 'react';
 import MessageContext from '../../context/message/messageContext';
 
 const MessageFilter = () => {
@@ -21,15 +21,24 @@ const MessageFilter = () => {
     }
   };
 
+  const onClick = () =>{
+    
+  }
+
   return (
-    <form>
-      <input
-        ref={text}
-        type='text'
-        placeholder='Filter Messages'
-        onChange={onChange}
-      />
-    </form>
+    <Fragment>
+      <form>
+        <input
+          ref={text}
+          type='text'
+          placeholder='Filter Messages'
+          onChange={onChange}
+        />
+      </form>
+      <button className='btn btn-success btn-block'>
+        Actualizar
+      </button>
+    </Fragment>
   );
 };
 

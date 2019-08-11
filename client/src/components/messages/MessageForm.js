@@ -1,21 +1,27 @@
 import React, { useState, useContext, useEffect } from 'react';
 import MessageContext from '../../context/message/messageContext';
+import AlertContext from '../../context/alert/alertContext';
 
 const MessageForm = () => {
   const messageContext = useContext(MessageContext);
+  const alertContext = useContext(AlertContext);
 
   const { addMessage, clearCurrentMessage, currentMessage } = messageContext;
+  const {setAlert} = alertContext;
 
   useEffect(() => {
     if (currentMessage !== null) {
-      setMessage(currentMessage);
+      setMessage({
+        ...currentMessage,
+        level:'Relax'
+      });
     } else {
       setMessage({
         name: '',
         email: '',
         phone: '',
         msj:'',
-        type: 'personal'
+        level: 'Relax'
       });
     }
   }, [messageContext, currentMessage]);
@@ -26,10 +32,10 @@ const MessageForm = () => {
     phone: '',
     msj:'',
     _id:'',
-    type: 'personal'
+    level: 'Relax'
   });
 
-  const { name, email, phone, msj, type} = message;
+  const { name, email, phone, msj, level} = message;
 
   const onChange = e =>
     setMessage({ ...message, [e.target.name]: e.target.value });
@@ -39,8 +45,12 @@ const MessageForm = () => {
     if (currentMessage != null) {
       addMessage({
         msj:msj,
-        _email:email
+        _email:email,
+        level
       });
+      setAlert('Message Is Sending','success');
+    }else{
+      setAlert('Please Add Fields','danger');
     }
     clearAll();
   };
@@ -60,6 +70,7 @@ const MessageForm = () => {
         name='name'
         value={name}
         onChange={onChange}
+        disabled
       />
       <input
         type='email'
@@ -67,6 +78,7 @@ const MessageForm = () => {
         name='email'
         value={email}
         onChange={onChange}
+        disabled
       />
       <input
         type='text'
@@ -74,24 +86,25 @@ const MessageForm = () => {
         name='phone'
         value={phone}
         onChange={onChange}
+        disabled
       />
       <h5>Message Type</h5>
       <input
         type='radio'
-        name='type'
-        value='personal'
-        checked={type === 'personal'}
+        name='level'
+        value='Relax'
+        checked={level === 'Relax'}
         onChange={onChange}
       />{' '}
-      Personal{' '}
+      Relax{' '}
       <input
         type='radio'
-        name='type'
-        value='professional'
-        checked={type === 'professional'}
+        name='level'
+        value='Important'
+        checked={level === 'Important'}
         onChange={onChange}
       />{' '}
-      Professional
+      Important
       <textarea name="msj" value={msj} onChange={onChange}>
       </textarea>
       <div>

@@ -20,6 +20,14 @@ const MessageSchema = mongoose.Schema({
     type: String,
     default: 'personal'
   },
+  level: {
+    type: String,
+    default: 'Relax'
+  },
+  msj:{
+    type:String,
+    default:''
+  },
   date: {
     type: Date,
     default: Date.now

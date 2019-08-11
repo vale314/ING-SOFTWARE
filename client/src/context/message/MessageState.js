@@ -4,7 +4,6 @@ import MessageContext from './messageContext';
 import messageReducer from './messageReducer';
 import {
   GET_MESSAGES,
-  ADD_MESSAGE,
   DELETE_MESSAGE,
   SET_CURRENT_MESSAGE,
   CLEAR_CURRENT_MESSAGE,
@@ -63,7 +62,7 @@ const MessageState = props => {
   // Delete Message
   const deleteMessage = async id => {
     try {
-      await axios.delete(`/api/contacts/${id}`);
+      await axios.delete(`/api/message/${id}`);
 
       dispatch({
         type: DELETE_MESSAGE,
